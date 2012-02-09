@@ -28,11 +28,11 @@
 define mysql::db (
   $user,
   $password,
-  $charset = 'utf8',
-  $host = 'localhost',
-  $grant='all',
+  $charset     = 'utf8',
+  $host        = 'localhost',
+  $grant       = 'all',
   $enforce_sql = false,
-  $sql=''
+  $sql         = ''
 ) {
 
   if $grant == 'all' {
@@ -60,7 +60,6 @@ define mysql::db (
   }
 
   database_grant{"${user}@${host}/${name}":
-  # privileges => [ 'alter_priv', 'insert_priv', 'select_priv', 'update_priv' ],
     privileges => $safe_grant,
     provider   => 'mysql',
     require    => Database_user["${user}@${host}"],
