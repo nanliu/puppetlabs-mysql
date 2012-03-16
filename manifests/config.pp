@@ -38,7 +38,6 @@ class mysql::config(
   File {
     owner  => 'root',
     group  => 'root',
-    mode   => '0400',
     notify => Exec['mysqld-restart'],
   }
 
@@ -69,12 +68,14 @@ class mysql::config(
 
     file { '/root/.my.cnf':
       content => template('mysql/my.cnf.pass.erb'),
+      mode    => '0400',
       require => Exec['set_mysql_rootpw'],
     }
 
     if $etc_root_password {
       file{ '/etc/my.cnf':
         content => template('mysql/my.cnf.pass.erb'),
+        mode    => '0400',
         require => Exec['set_mysql_rootpw'],
       }
     }
@@ -92,6 +93,10 @@ class mysql::config(
   file { $config_file:
     content => template('mysql/my.cnf.erb'),
     mode    => '0644',
+  }
+  file { '/var/log/mysql':
+    ensure => directory,
+    mode   => '0755',
   }
 
 }

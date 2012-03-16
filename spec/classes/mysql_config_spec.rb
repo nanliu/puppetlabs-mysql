@@ -114,6 +114,13 @@ describe 'mysql::config' do
               'ensure' => 'directory',
               'mode'   => '0755'
             )}
+            it { should contain_file('/var/log/mysql').with(
+              'owner'  => 'root',
+              'group'  => 'root',
+              'notify' => 'Exec[mysqld-restart]',
+              'ensure' => 'directory',
+              'mode'   => '0755'
+            )}
             it { should contain_file(param_values[:config_file]).with(
               'owner'  => 'root',
               'group'  => 'root',
