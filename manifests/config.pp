@@ -80,7 +80,6 @@ class mysql::config(
     }
   }
 
-
   file { '/etc/mysql':
     ensure => directory,
     mode   => '0755',
@@ -92,6 +91,12 @@ class mysql::config(
   file { $config_file:
     content => template('mysql/my.cnf.erb'),
     mode    => '0644',
+  }
+  file { '/var/log/mysql':
+    ensure => directory,
+    mode   => '0755',
+    owner  => 'mysql',
+    group  => 'mysql',
   }
 
 }
